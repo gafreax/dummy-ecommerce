@@ -1,0 +1,7 @@
+img.modal {
+    z-index: 10000;
+    background-color: gray;
+    padding: 20px;
+    width: 98%;
+    height: 98%;
+}
