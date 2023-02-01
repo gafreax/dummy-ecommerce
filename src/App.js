@@ -3,18 +3,21 @@ import Card from "./components/Card";
 import Button from "./components/Button";
 
 import { API_BASE_URL } from "./config";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Search from "./components/Search";
 import Modal from "./components/modal";
 
 const image = "https://qui-montagna.com/wp-content/uploads/2022/01/k2.jpg";
+const initaliModalState = {show: false, src: image}
+export const ModalContext = createContext(initaliModalState);
 
 function App() {
   const [products, setProducts] = useState(undefined);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [modal, setModal] = useState({show: false, src: image})
+  const [modal, setModal] = useState(initaliModalState)
+  
   const limit = 6;
 
   useEffect(() => {
@@ -64,15 +67,16 @@ function App() {
   return (
     <div className="App container">
       <h1>E-Commerce</h1>
-      <button onClick={e => modal.show ? setModal({show:false, src: image}) : setModal({show:true, src: image})  }>vedi modale</button>
-      <Search handler={searchHandler} />
-      <div className="row">{showProduct()}</div>
-      <div className="container">
-        <Button onClick={onBackHandler}>indietro</Button>
-        <Button onClick={onForwardHandler}>Avanti</Button>
-      </div>
-      
-      <Modal show={modal.show} src={modal.src} />
+        <Search handler={searchHandler} />
+        <ModalContext.Provider value={{modal, setModal}}>
+          <Modal show={modal.show} src={modal.src} />
+          <div className="row">{showProduct()}</div>
+        </ModalContext.Provider>
+        <div className="container">
+          <Button onClick={onBackHandler}>indietro</Button>
+          <Button onClick={onForwardHandler}>Avanti</Button>
+        </div>
+        
     </div>
   );
 }
