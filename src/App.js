@@ -7,15 +7,12 @@ import { useEffect, useState } from "react";
 import Search from "./components/Search";
 import Modal from "./components/Modal";
 
-const image = "https://qui-montagna.com/wp-content/uploads/2022/01/k2.jpg";
-const initaliModalState = {show: false, src: image };
-
 function App() {
   const [products, setProducts] = useState(undefined);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [modal, setModal] = useState(initaliModalState)
+  const [modalState, setModalState] = useState({show: false, src: null })
 
   const limit = 6;
 
@@ -60,15 +57,17 @@ function App() {
     if (!products) return "Sto caricando...";
     return products
       .filter((product) => mustShow(product))
-      .map((product, key) => <Card product={product} key={`card-${key}`} modal={modal}  setModal={setModal} />);
+      .map((product, key) => <Card product={product} key={`card-${key}`} modalState={modalState} setModalState={setModalState} />);
   };
 
   return (
     <div className="App container">
       <h1>E-Commerce</h1>
         <Search handler={searchHandler} />
-          <Modal show={modal.show} src={modal.src} />
-          <div className="row">{showProduct()}</div>
+          <Modal show={modalState.show} src={modalState.src} />
+          <div className="row">
+            {showProduct()}
+          </div>
 
         <div className="container">
           <Button onClick={onBackHandler}>indietro</Button>
