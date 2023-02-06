@@ -58,7 +58,7 @@ function App() {
     return products
       .filter((product) => mustShow(product))
       .map((product, key) => <Card product={product} key={`card-${key}`}
-          imageHandler={e => setModalState({show: !modalState.show, src: product.images[0] })}
+          imageHandler={e => setModalState({show: true, src: product.images[0] })}
         />);
   };
 
@@ -66,10 +66,9 @@ function App() {
     <div className="App container">
       <h1>E-Commerce</h1>
         <Search handler={searchHandler} />
-          <Modal show={modalState.show} src={modalState.src} />
-          <div className="row">
-            {showProduct()}
-          </div>
+          <Modal modalState={modalState} onClick={e => setModalState({show: false, src:"" }) }/>
+          
+          {modalState.show || <div className="row"> {showProduct()} </div> }
 
         <div className="container">
           <Button onClick={onBackHandler}>indietro</Button>

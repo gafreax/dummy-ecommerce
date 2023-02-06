@@ -1,9 +1,9 @@
 import "./style.css";
 
-function Modal({show, src}) {
+function Modal({modalState: {show, src}, onClick}) {
     return show && 
     <div>
-        <img src={src} alt="modal image" />
+        <img src={src} alt="modal image" onClick={onClick} />
     </div>
 }
 
