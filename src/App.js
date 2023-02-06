@@ -1,6 +1,11 @@
-import "./App.css";
+import React, { createContext, useEffect, useState } from "react";
+
 import Card from "./components/Card";
 import Button from "./components/Button";
+import Search from "./components/Search";
+import Modal from "./components/Modal";
+
+import "./App.css";
 
 import { API_BASE_URL } from "./config";
 import { useEffect, useState } from "react";

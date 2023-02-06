@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./style.css";
 
 function Modal({modalState: {show, src}, onClick}) {
