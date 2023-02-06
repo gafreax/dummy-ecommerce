@@ -58,7 +58,7 @@ function App() {
 
   // Todo: spiegare in classe
   const showProduct = () => {
-    if (!products) return "Caricamento...";
+    if (!products) return "Sto caricando...";
     return products
       .filter((product) => mustShow(product))
       .map((product, key) => <Card product={product} key={`card-${key}`} />);
