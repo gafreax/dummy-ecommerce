@@ -1,11 +1,13 @@
-import "./App.css";
+import React, { createContext, useEffect, useState } from "react";
+
 import Card from "./components/Card";
 import Button from "./components/Button";
+import Search from "./components/Search";
+import Modal from "./components/Modal";
+
+import "./App.css";
 
 import { API_BASE_URL } from "./config";
-import { createContext, useEffect, useState } from "react";
-import Search from "./components/Search";
-import Modal from "./components/modal";
 
 const image = "https://qui-montagna.com/wp-content/uploads/2022/01/k2.jpg";
 const initaliModalState = {show: false, src: image}

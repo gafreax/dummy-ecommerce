@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { ModalContext } from "../../App";
 import Button from "../Button";
 import Description from "../Description";
