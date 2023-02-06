@@ -57,7 +57,9 @@ function App() {
     if (!products) return "Sto caricando...";
     return products
       .filter((product) => mustShow(product))
-      .map((product, key) => <Card product={product} key={`card-${key}`} modalState={modalState} setModalState={setModalState} />);
+      .map((product, key) => <Card product={product} key={`card-${key}`}
+          imageHandler={e => setModalState({show: !modalState.show, src: product.images[0] })}
+        />);
   };
 
   return (
