@@ -1,10 +1,6 @@
-import { useContext } from "react";
-import { ModalContext } from "../../App";
 import "./style.css";
 
-function Modal() {
-    const {show, src} = useContext(ModalContext);
-
+function Modal({show, src}) {
     return show && 
     <div>
         <img src={src} alt="modal image" />
