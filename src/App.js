@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import fetchProducts from "./api/fetchProduct";
+
 import Card from "./components/Card";
 import Button from "./components/Button";
 import Search from "./components/Search";
@@ -7,7 +9,7 @@ import Modal from "./components/Modal";
 
 import "./App.css";
 
-import { API_BASE_URL } from "./config";
+import { API_FETCH_LIMIT } from "./config";
 
 function App() {
   const [products, setProducts] = useState(undefined);
@@ -17,34 +19,22 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [modalState, setModalState] = useState({show: false, src: null })
 
-  const limit = 4;
-
-  useEffect(() => {
+  useEffect(() => async () => {
     if(!reload) return;
     console.log("visualizza");
-    const fetchProducts = async () => {
-      const url = `${API_BASE_URL}products?limit=${limit}&skip=${skip}`;
-      const dataFetched = await fetch(url);
-      const dataJSON = await dataFetched.json();
-      setTotal(dataJSON.total);
-      setProducts(dataJSON.products);
-    };
-    fetchProducts();
+    const dataJSON = await fetchProducts({skip});
+    setTotal(dataJSON.total);
+    setProducts(dataJSON.products);
     setReload(false);
   }, [reload, skip]);
 
-  useEffect(() => {
+  useEffect(() => async () => {
     console.log("ricerca");
-    const fetchProducts = async () => {
-      if(searchText.trim().length === 0 || reload) return;
-      const url = `${API_BASE_URL}products/search?q=${searchText}&limit=${limit}&skip=${skip}`;
-      const dataFetched = await fetch(url);
-      const dataJSON = await dataFetched.json();
-      setTotal(dataJSON.total);
-      setProducts(dataJSON.products);
-    };
+    const dataJSON = await fetchProducts({skip, searchText});
+    setTotal(dataJSON.total);
+    setProducts(dataJSON.products);
     fetchProducts();
-  }, [searchText,limit,skip,reload]);
+  }, [searchText,skip]);
 
   const searchHandler = (text) => {
     if(text.trim().length === 0 ) {
@@ -57,15 +47,15 @@ function App() {
   };
 
   const onBackHandler = (e) => {
-    if (skip - limit >= 0) {
-      setSkip(skip - limit);
+    if (skip - API_FETCH_LIMIT >= 0) {
+      setSkip(skip - API_FETCH_LIMIT);
       setReload(true);
     }
   };
 
   const onForwardHandler = (e) => {
-    if (skip + limit < total) {
-      setSkip(skip + limit);
+    if (skip + API_FETCH_LIMIT < total) {
+      setSkip(skip + API_FETCH_LIMIT);
       setReload(true);
     }
   };
