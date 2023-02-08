@@ -13,12 +13,15 @@ function App() {
   const [products, setProducts] = useState(undefined);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
+  const [reload, setReload] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [modalState, setModalState] = useState({show: false, src: null })
 
-  const limit = 6;
+  const limit = 4;
 
   useEffect(() => {
+    if(!reload) return;
+    console.log("visualizza");
     const fetchProducts = async () => {
       const url = `${API_BASE_URL}products?limit=${limit}&skip=${skip}`;
       const dataFetched = await fetch(url);
@@ -27,39 +30,50 @@ function App() {
       setProducts(dataJSON.products);
     };
     fetchProducts();
-  }, [skip]);
+    setReload(false);
+  }, [reload, skip]);
+
+  useEffect(() => {
+    console.log("ricerca");
+    const fetchProducts = async () => {
+      if(searchText.trim().length === 0 || reload) return;
+      const url = `${API_BASE_URL}products/search?q=${searchText}&limit=${limit}&skip=${skip}`;
+      const dataFetched = await fetch(url);
+      const dataJSON = await dataFetched.json();
+      setTotal(dataJSON.total);
+      setProducts(dataJSON.products);
+    };
+    fetchProducts();
+  }, [searchText,limit,skip,reload]);
 
   const searchHandler = (text) => {
-    console.log("handler on ", text);
-    setSearchText(text.toLowerCase());
+    if(text.trim().length === 0 ) {
+      console.log("impostiamo skip ", skip);
+      setReload(true);
+      setSkip(0);
+    } else {
+      setSearchText(text.toLowerCase());
+    }
   };
 
   const onBackHandler = (e) => {
     if (skip - limit >= 0) {
       setSkip(skip - limit);
+      setReload(true);
     }
   };
 
   const onForwardHandler = (e) => {
     if (skip + limit < total) {
       setSkip(skip + limit);
+      setReload(true);
     }
-  };
-
-  // Todo: spiegare in classe
-  const mustShow = (product) => {
-    const brand = product.brand.toLowerCase();
-    const ret = searchText === "" || brand.indexOf(searchText)>=0;
-    console.log(`on ${brand} can return ${ret}`);
-    return ret;
   };
 
   // Todo: spiegare in classe
   const showProduct = () => {
     if (!products) return "Sto caricando...";
-    return products
-      .filter((product) => mustShow(product))
-      .map((product, key) => <Card product={product} key={`card-${key}`}
+    return products.map((product, key) => <Card product={product} key={`card-${key}`}
           imageHandler={e => setModalState({show: true, src: product.images[0] })}
         />);
   };
