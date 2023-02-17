@@ -15,72 +15,51 @@ function App() {
   const [products, setProducts] = useState(undefined);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
-  const [reload, setReload] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [modalState, setModalState] = useState({show: false, src: null })
 
   useEffect(() => async () => {
-    if(!reload) return;
-    console.log("visualizza");
-    const dataJSON = await fetchProducts({skip});
-    setTotal(dataJSON.total);
-    setProducts(dataJSON.products);
-    setReload(false);
-  }, [reload, skip]);
-
-  useEffect(() => async () => {
-    console.log("ricerca");
+    console.log("useEffect: visualizza", searchText);
     const dataJSON = await fetchProducts({skip, searchText});
+    console.log("useEffect: caricato", dataJSON);
     setTotal(dataJSON.total);
     setProducts(dataJSON.products);
-    fetchProducts();
-  }, [searchText,skip]);
-
-  const searchHandler = (text) => {
-    if(text.trim().length === 0 ) {
-      console.log("impostiamo skip ", skip);
-      setReload(true);
-      setSkip(0);
-    } else {
-      setSearchText(text.toLowerCase());
-    }
-  };
+  }, [searchText, skip]);
 
   const onBackHandler = (e) => {
     if (skip - API_FETCH_LIMIT >= 0) {
       setSkip(skip - API_FETCH_LIMIT);
-      setReload(true);
     }
   };
 
   const onForwardHandler = (e) => {
     if (skip + API_FETCH_LIMIT < total) {
       setSkip(skip + API_FETCH_LIMIT);
-      setReload(true);
     }
   };
 
-  // Todo: spiegare in classe
   const showProduct = () => {
     if (!products) return "Sto caricando...";
-    return products.map((product, key) => <Card product={product} key={`card-${key}`}
-          imageHandler={e => setModalState({show: true, src: product.images[0] })}
+    return products.map((product) => <Card product={product} key={`card-${product.id}`}
+          imageHandler={e => setModalState({show: true, src: product.images })}
         />);
   };
 
   return (
     <div className="App container">
-      <h1>E-Commerce</h1>
-        <Search handler={searchHandler} />
-          <Modal modalState={modalState} onClick={e => setModalState({show: false, src:"" }) }/>
+      <h1>E-Commerce {searchText}</h1>
+        <Search handler={setSearchText} />
+        <Modal modalState={modalState} onClick={e => setModalState({show: false, src:[] }) }/>
           
-          {modalState.show || <div className="row"> {showProduct()} </div> }
-
-        <div className="container">
-          <Button onClick={onBackHandler}>indietro</Button>
-          <Button onClick={onForwardHandler}>Avanti</Button>
-        </div>
-        
+        {modalState.show || 
+          <div className="container">
+            <div className="row"> {showProduct()} </div>
+              <div className="d-flex">
+                <Button onClick={onBackHandler}>indietro</Button>
+                <Button onClick={onForwardHandler}>Avanti</Button>
+              </div>
+          </div>
+        }
     </div>
   );
 }
