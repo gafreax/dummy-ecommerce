@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import fetchProducts from "./api/fetchProduct";
 
@@ -18,12 +18,16 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [modalState, setModalState] = useState({show: false, src: null })
 
-  useEffect(() => async () => {
-    console.log("useEffect: visualizza", searchText);
-    const dataJSON = await fetchProducts({skip, searchText});
-    console.log("useEffect: caricato", dataJSON);
-    setTotal(dataJSON.total);
-    setProducts(dataJSON.products);
+  useEffect(() => {
+    const getProducts = async () => {
+      console.log("useEffect: visualizza", searchText);
+      const dataJSON = await fetchProducts({skip, searchText});
+      console.log("useEffect: caricato", dataJSON);
+      setTotal(dataJSON.total);
+      setProducts(dataJSON.products);
+    };
+
+    getProducts();
   }, [searchText, skip]);
 
   const onBackHandler = (e) => {
@@ -54,9 +58,9 @@ function App() {
         {modalState.show || 
           <div className="container">
             <div className="row"> {showProduct()} </div>
-              <div className="d-flex">
-                <Button onClick={onBackHandler}>indietro</Button>
-                <Button onClick={onForwardHandler}>Avanti</Button>
+            <div className="d-flex">
+              <Button onClick={onBackHandler}>indietro</Button>
+              <Button onClick={onForwardHandler}>Avanti</Button>
               </div>
           </div>
         }
