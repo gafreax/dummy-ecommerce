@@ -16,7 +16,7 @@ function App() {
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [modalState, setModalState] = useState({ show: false, src: null });
+  const [modalState, setModalState] = useState({ show: false, images: null });
 
   useEffect(() => {
     const getProducts = async () => {
@@ -26,7 +26,7 @@ function App() {
       setProducts(products);
     };
     getProducts();
-  }, [searchText, skip]);
+  }, [searchText]);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -53,7 +53,7 @@ function App() {
   const showProduct = () => {
     if (!products) return "Sto caricando...";
     return products.map((product) => {
-      const modalState = { show: true, src: product.images };
+      const modalState = { show: true, images: product.images };
       const key = `card-${product.id}`;
       return (
         <Card
@@ -68,21 +68,17 @@ function App() {
   return (
     <div className="App container">
       <h1>E-Commerce {searchText}</h1>
-      <Search handler={setSearchText} />
       <Modal
         modalState={modalState}  setModalState={setModalState}
       />
 
       {modalState.show || (
         <div className="container">
+          <Search handler={setSearchText} />
           <div className="row"> {showProduct()} </div>
           <div className="d-flex">
-            {skip - API_FETCH_LIMIT >= 0 && (
               <Button onClick={onBackHandler}>indietro</Button>
-            )}
-            {skip + API_FETCH_LIMIT < total && (
               <Button onClick={onForwardHandler}>avanti</Button>
-            )}
           </div>
         </div>
       )}
