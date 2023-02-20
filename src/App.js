@@ -20,15 +20,23 @@ function App() {
 
   useEffect(() => {
     const getProducts = async () => {
-      console.log("useEffect: visualizza", searchText);
-      const dataJSON = await fetchProducts({ skip, searchText });
-      console.log("useEffect: caricato", dataJSON);
-      setTotal(dataJSON.total);
-      setProducts(dataJSON.products);
+      setSkip(0);
+      const {products, total} = await fetchProducts({skip: 0, searchText});
+      setTotal(total);
+      setProducts(products);
     };
-
     getProducts();
   }, [searchText, skip]);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const {products, total} = await fetchProducts({skip});
+      setTotal(total);
+      setProducts(products);
+    };
+    getProducts();
+  }, [skip]);
+
 
   const onBackHandler = (e) => {
     if (skip - API_FETCH_LIMIT >= 0) {
