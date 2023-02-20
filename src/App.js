@@ -62,8 +62,7 @@ function App() {
       <h1>E-Commerce {searchText}</h1>
       <Search handler={setSearchText} />
       <Modal
-        modalState={modalState}
-        onClick={(e) => setModalState({ show: false  })}
+        modalState={modalState}  setModalState={setModalState}
       />
 
       {modalState.show || (
