@@ -71,17 +71,14 @@ function App() {
       <Modal
         modalState={modalState}  setModalState={setModalState}
       />
-
-      {modalState.show || (
-        <div className="container">
-          <Search handler={setSearchText} />
-          <div className="row"> {showProduct()} </div>
-          <div className="d-flex">
-              <Button onClick={onBackHandler}>indietro</Button>
-              <Button onClick={onForwardHandler}>avanti</Button>
-          </div>
+      <div className="container">
+        <Search handler={setSearchText} />
+        <div className="row"> {showProduct()} </div>
+        <div className="d-flex">
+            <Button onClick={onBackHandler}>indietro</Button>
+            <Button onClick={onForwardHandler}>avanti</Button>
         </div>
-      )}
+      </div>
     </div>
   );
 }
