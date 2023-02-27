@@ -10,4 +10,12 @@ const fetchProducts = async ({skip, searchText=null}) => {
     return dataJSON;
 };
 
+export const fetchProduct = async ({id}) => {
+    const url = `${API_BASE_URL}products/${id}`;
+    console.log("url", url);
+    const dataFetched = await fetch(url);
+    const dataJSON = await dataFetched.json();
+    return dataJSON;
+};
+
 export default fetchProducts;

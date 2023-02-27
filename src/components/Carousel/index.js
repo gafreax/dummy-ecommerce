@@ -3,7 +3,7 @@ import React from "react";
 function Carousel({ id, images, onClick }) {
 
   const generateImages = () => {
-    return images.map((image, index) => {
+    return images && images.map((image, index) => {
       const className = `carousel-item ${index === 0 ? 'active': ''}`;
       return <div key={`key-${image}`} className={className}>
         <img src={image} className="d-block w-100" alt={image} />
