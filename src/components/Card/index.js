@@ -10,7 +10,7 @@ function Card({ product, imageHandler } ) {
   const {description, id, images } = product;
   
   return (
-    <div className="myCard card g-1 col col-4 col-xl-3 m-1">
+    <div className="card g-1 m-1 col-4">
       <Carousel images={images} onClick={() => {}} id={id} />
       <div className="card-body">
         <Description>{description}</Description>

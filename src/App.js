@@ -10,6 +10,7 @@ import Modal from "./components/Modal";
 import "./App.css";
 
 import { API_FETCH_LIMIT } from "./config";
+import Categories from "./components/Categories";
 
 function App() {
   const [products, setProducts] = useState(undefined);
@@ -21,7 +22,7 @@ function App() {
   useEffect(() => {
     const getProducts = async () => {
       setSkip(0);
-      const {products, total} = await fetchProducts({skip: 0, searchText});
+      const { products, total } = await fetchProducts({ skip: 0, searchText });
       setTotal(total);
       setProducts(products);
     };
@@ -30,13 +31,12 @@ function App() {
 
   useEffect(() => {
     const getProducts = async () => {
-      const {products, total} = await fetchProducts({skip});
+      const { products, total } = await fetchProducts({ skip });
       setTotal(total);
       setProducts(products);
     };
     getProducts();
   }, [skip]);
-
 
   const onBackHandler = (e) => {
     if (skip - API_FETCH_LIMIT >= 0) {
@@ -68,15 +68,20 @@ function App() {
   return (
     <div className="App container">
       <h1>E-Commerce {searchText}</h1>
-      <Modal
-        modalState={modalState}  setModalState={setModalState}
-      />
+      <Modal modalState={modalState} setModalState={setModalState} />
       <div className="container">
         <Search handler={setSearchText} />
-        <div className="row"> {showProduct()} </div>
-        <div className="d-flex">
-            <Button onClick={onBackHandler}>indietro</Button>
-            <Button onClick={onForwardHandler}>avanti</Button>
+        <div className="row">
+          <div className="col-2">
+            <Categories />
+          </div>
+          <div className="col-10">
+            <div className="d-flex">{showProduct()}</div>
+            <div className="d-flex">
+              <Button onClick={onBackHandler}>indietro</Button>
+              <Button onClick={onForwardHandler}>avanti</Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
