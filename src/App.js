@@ -1,16 +1,24 @@
+import { Provider } from "react-redux";
 import React, { useEffect, useState } from "react";
 
+import { useCookies } from "react-cookie";
+import { Navigate } from "react-router-dom";
+import { Container, Col, Row } from "react-bootstrap";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import fetchProducts from "./api/fetchProduct";
+import {store} from "./store/index.js";
 
 import Card from "./components/Card";
 import Button from "./components/Button";
 import Search from "./components/Search";
 import Modal from "./components/Modal";
 
-import "./App.css";
-
 import { API_FETCH_LIMIT } from "./config";
 import Categories from "./components/Categories";
+
+import "./App.css";
 
 function App() {
   const [products, setProducts] = useState(undefined);
@@ -18,6 +26,7 @@ function App() {
   const [total, setTotal] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [modalState, setModalState] = useState({ show: false, images: null });
+  const [cookies] = useCookies(["auth"]);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -66,25 +75,36 @@ function App() {
   };
 
   return (
-    <div className="App container">
-      <h1>E-Commerce {searchText}</h1>
-      <Modal modalState={modalState} setModalState={setModalState} />
-      <div className="container">
-        <Search handler={setSearchText} />
-        <div className="row">
-          <div className="col-2">
-            <Categories />
-          </div>
-          <div className="col-10">
-            <div className="d-flex">{showProduct()}</div>
-            <div className="d-flex">
-              <Button onClick={onBackHandler}>indietro</Button>
-              <Button onClick={onForwardHandler}>avanti</Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Provider store={store}>
+      {cookies.auth ? (
+        <>
+          <Modal modalState={modalState} setModalState={setModalState} />
+          <Container>
+            <Row>
+              <Col>
+                <h1>E-Commerce</h1>
+                <h3>{searchText}</h3>
+              </Col>
+            </Row>
+            <Search handler={setSearchText} />
+            <Row>
+              <Col xs={2}>
+                <Categories />
+              </Col>
+              {showProduct()}
+            </Row>
+            <Row>
+              <Col>
+                <Button onClick={onBackHandler}>indietro</Button>
+                <Button onClick={onForwardHandler}>avanti</Button>
+              </Col>
+            </Row>
+          </Container>
+        </>
+      ) : (
+        <Navigate replace to="/login" />
+      )}
+    </Provider>
   );
 }
 

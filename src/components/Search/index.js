@@ -1,15 +1,20 @@
+import {useDispatch, useSelector} from 'react-redux';
 import React, { useRef } from "react";
 import Button from "../Button";
+import { clear, increment } from '../../store';
 
 function Search({handler}) {
     const searchRef = useRef("");
-    
+    const counter = useSelector( state => state.counter);
+    const dispatch = useDispatch();
     const searchHandler = () => {
+      dispatch(increment);
       handler(searchRef.current.value);
     }
 
     const clearSearch = () => {
       searchRef.current.value = "";
+      dispatch(clear);
       handler("");
     }
 
@@ -20,6 +25,7 @@ function Search({handler}) {
         <Button onClick={() => searchHandler() }>Ricerca</Button>
         <Button onClick={() => clearSearch() }>Cancella</Button>
       </form>
+      <span>ricerche effettuate {counter}</span>
     </div>
   </nav>
 }

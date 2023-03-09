@@ -8,18 +8,22 @@ import './index.css';
 import App from './App';
 import About from './pages/about/index.js'
 import Product from './pages/product/index.js';
+import Login from './pages/login';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path='/' element={<App />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/product/:productId' element={<Product />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path='/' element={<App />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/product/:productId' element={<Product />} />
+        </Routes>
+      </Router>
+
   </React.StrictMode>
 );
 
