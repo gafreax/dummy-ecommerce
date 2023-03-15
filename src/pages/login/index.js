@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { useCookies } from "react-cookie";

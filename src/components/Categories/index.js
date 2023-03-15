@@ -12,7 +12,7 @@ function Categories () {
       getCategories();
     }, []);
 
-    return categories && categories.map(category => <span key={`cat-${category}`} class="badge bg-secondary">{category}</span>)
+    return categories && categories.map(category => <span key={`cat-${category}`} className="badge bg-secondary">{category}</span>)
 }
 
 export default Categories;

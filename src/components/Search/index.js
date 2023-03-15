@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import React, { useRef } from "react";
 import Button from "../Button";
-import { clear, increment } from '../../store';
+import { clear, increment } from '../../store/internal/index.js';
 
 function Search({handler}) {
     const searchRef = useRef("");
