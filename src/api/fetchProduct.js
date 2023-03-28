@@ -11,7 +11,7 @@ const fetchProducts = async ({skip, searchText=null}) => {
 };
 
 export const fetchProduct = async ({id}) => {
-    const url = `${API_BASE_URL}products/${id}`;
+    const url = `${API_BASE_URL}products/${id}/?limit=3`;
     console.log("url", url);
     const dataFetched = await fetch(url);
     const dataJSON = await dataFetched.json();

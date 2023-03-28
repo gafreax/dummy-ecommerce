@@ -19,8 +19,7 @@ import "./App.css";
 
 function App() {
   
-  const loading = useSelector(state => state.loading);
-  const dataIsPresent = useSelector(state => state.dataIsPresent);
+  const products = useSelector(state => state.products);
 
   const dispatch = useDispatch();
 
@@ -28,34 +27,17 @@ function App() {
   const [cookies] = useCookies(["auth"]);
 
   useEffect(() => {
-    fetchProducts(dispatch);
-  },[]);
-
-  const onBackHandler = (e) => {
-    // if (skip - API_FETCH_LIMIT >= 0) {
-    //   setSkip(skip - API_FETCH_LIMIT);
-    // }
-  };
-
-  const onForwardHandler = (e) => {
-    // if (skip + API_FETCH_LIMIT < total) {
-    //   setSkip(skip + API_FETCH_LIMIT);
-    // }
-  };
+    fetchProducts(dispatch, products.skip);
+  },[dispatch, products.skip]);
 
   return (
     <>
       <Modal modalState={modalState} setModalState={setModalState} />
       { cookies.auth ? (
-        <>
-          { loading || !dataIsPresent ? <h2>sto caricando</h2> 
-          :
-            <Home />
-          }
-        </>
+        <Home />
       ) : (
         <Navigate replace to="/login" />
-      )};
+      )}
     </>
   )
 }
