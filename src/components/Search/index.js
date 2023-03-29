@@ -1,27 +1,33 @@
 import React, { useRef } from "react";
-import Button from "../Button";
+import { InputGroup, Form, Button } from "react-bootstrap";
 
-function Search({handler}) {
-    const searchRef = useRef("");
-    
-    const searchHandler = () => {
-      handler(searchRef.current.value);
-    }
 
-    const clearSearch = () => {
-      searchRef.current.value = "";
-      handler("");
-    }
+function Search({ handler }) {
+  const searchRef = useRef("");
 
-    return <nav className="navbar">
-    <div className="container">
-      <form className="d-flex" role="search">
-        <input onChange={e => e.target.value.trim().length === 0 && handler("") } ref={searchRef} className="form-control me-3" type="search" placeholder="Search" />
-        <Button onClick={() => searchHandler() }>Ricerca</Button>
-        <Button onClick={() => clearSearch() }>Cancella</Button>
-      </form>
-    </div>
-  </nav>
+  const searchHandler = () => {
+    handler(searchRef.current.value);
+  };
+
+  const clearSearch = () => {
+    searchRef.current.value = "";
+    handler("");
+  };
+
+  return (
+    <InputGroup className="mb-3">
+      <Form.Control
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="search"
+        type="text"
+        onChange={(e) => e.target.value.trim().length === 0 && handler("")}
+        ref={searchRef}
+      />
+      <Button onClick={() => searchHandler()}>Ricerca</Button>
+      <Button variant="secondary" onClick={() => clearSearch()}>Cancella</Button>
+    </InputGroup>
+  );
 }
 
-export default Search
+export default Search;

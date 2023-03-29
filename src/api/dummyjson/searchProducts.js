@@ -2,10 +2,12 @@
 import { API_BASE_URL, API_FETCH_LIMIT } from "../../config.js";
 import { fetchDataFailure, fetchDataRequest, fetchDataSuccess } from "../../store/dummyjson/actions.js";
 
-const fetchProducts = async (dispatch,skip) => {
+const searchProducts = async (dispatch,searchText) => {
     dispatch(fetchDataRequest());
     try {
-        const data = await fetch(`${API_BASE_URL}products?limit=${API_FETCH_LIMIT}&skip=${skip}`);
+        const searchFilter = `/search?q=${searchText}&`;
+        const url = `${API_BASE_URL}products${searchFilter}limit=${API_FETCH_LIMIT}`;
+        const data = await fetch(url);
         const json = await data.json();
         dispatch(fetchDataSuccess(json));
     } catch(error) {
@@ -13,4 +15,4 @@ const fetchProducts = async (dispatch,skip) => {
     }
 }
 
-export default fetchProducts;
+export default searchProducts;

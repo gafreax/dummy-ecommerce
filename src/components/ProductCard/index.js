@@ -1,4 +1,5 @@
 import React from "react";
+import { Card } from "react-bootstrap";
 
 import Button from "../Button";
 import Carousel from "../Carousel";
@@ -6,17 +7,17 @@ import Description from "../Description";
 
 import "./style.css";
 
-function Card({ product, imageHandler }) {
+function ProductCard({ product, imageHandler }) {
   const { description, id, images } = product;
   return (
-    <div style={{maxWidth: "40%", float: "left", margin: "8px" }}>
+    <Card style={{ padding: "1rem", marginBottom: "1rem" }}>
       <Carousel images={images} onClick={() => {}} id={id} />
-      <div className="card-body">
+      <Card.Body>
         <Description>{description}</Description>
         <Button onClick={(e) => imageHandler()}>Vedi immagini</Button>
-      </div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 }
 
-export default Card;
+export default ProductCard;

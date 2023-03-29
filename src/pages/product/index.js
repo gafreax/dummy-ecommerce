@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { fetchProduct } from "../../api/fetchProduct";
-import Card from "../../components/Card";
+import fetchProduct from "../../api/dummyjson/fetchProduct";
+
+import ProductCard from "../../components/ProductCard";
 
 function Product() {
-    const [product, setProduct] = useState({});
+    const dispatch = useDispatch();
     const {productId} = useParams();
+    const products = useSelector(store => store.products);
+    const product = products.products[0];
+
     useEffect(() => {
-        const getProduct = async () => {
-            const product  = await fetchProduct({ id: productId });
-            console.log(product);
-            setProduct(product);
-        };
-        getProduct();
-    }, [productId]);
-    return <Card product={product} imageHandler={() => console.log("not implemented")} />
+        fetchProduct(dispatch, productId);
+    }, [dispatch, productId]);
+    return <ProductCard product={product} imageHandler={() => console.log("not implemented")} />
 }
 
 export default Product;

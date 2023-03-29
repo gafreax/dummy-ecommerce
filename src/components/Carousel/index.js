@@ -6,7 +6,7 @@ function Carousel({ id, images, onClick }) {
     return images && images.map((image, index) => {
       const className = `carousel-item ${index === 0 ? 'active': ''}`;
       return <div key={`key-${image}`} className={className}>
-        <img src={image} className="d-block w-100" alt={image} />
+        <img src={image} className="d-block w-100 rounded" alt={image} />
       </div>
     });
   }
@@ -14,7 +14,6 @@ function Carousel({ id, images, onClick }) {
   return (
     <div
       className="carousel slide carousel-dark"
-      data-bs-ride="carousel"
       data-testid="carousel"
       id={`carousel-${id}`}
     >
