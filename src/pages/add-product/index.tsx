@@ -19,8 +19,8 @@ import "./style.scss";
 
 
 const AddProduct = () => {
-    const refName = useRef("");
-    const refDescription = useRef("");
+    const refName= useRef<HTMLInputElement>(null);
+    const refDescription = useRef<HTMLInputElement>(null);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
