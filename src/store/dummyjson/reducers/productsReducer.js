@@ -1,11 +1,11 @@
 import { CHANGE_SKIP, FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS, FETCH_DATA_REQUEST } from "../actions.js";
 
 const initialState = {
-    dataIsPresent: false,
     error: null,
     loading: false,
-    products: [],
+    items: [],
     skip: 0,
+    loaded: 0,
     total: 0,
 };
 
@@ -21,11 +21,11 @@ const productsReducer = (state = initialState, action) => {
     case FETCH_DATA_SUCCESS:
         return {
             ...state,
-            dataIsPresent: true,
             error: null,
             loading: false,
-            products: action.payload.products,
-            total: action.payload.total
+            items: action.payload.products,
+            total: action.payload.total,
+            loaded: state.loaded + action.payload.products.lenght
         };
     case FETCH_DATA_FAILURE:
         return {

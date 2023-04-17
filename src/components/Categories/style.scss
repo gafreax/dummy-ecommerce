@@ -7,6 +7,12 @@ $base: 4px;
 $distance: calc($base * 1.5);
 $border-radius: 1rem !default;
 
+
+.dummy-categories-col {
+    padding: "1rem";
+    margin-bottom: "1rem";
+}
+
 .dummy-categories {
     display: flex;
     flex-direction: column;

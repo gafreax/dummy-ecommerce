@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from './reportWebVitals.js';
+
 import store from "./store/dummyjson/index.js";
 
 import './index.css';
-import App from './App';
+
+import App from './App.js';
 import About from './pages/about/index.js'
-import Product from './pages/product/index.js';
-import Login from './pages/login';
+import Login from './pages/login/index.js';
+import AddProduct from './pages/add-product/index.tsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -23,7 +25,9 @@ root.render(
           <Route path='/' element={<App />} />
           <Route path='/about' element={<About />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/product/:productId' element={<Product />} />
+          <Route path='/add/product' element={<AddProduct />} />
+          <Route path='*' element={<h1>404 Not Found</h1>} />
+
         </Routes>
       </Router>
     </Provider>

@@ -3,11 +3,17 @@ import React from "react";
 import Carousel from "../Carousel/index.js";
 
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { hideModal } from "../../store/dummyjson/actions.js";
 
-function Modal({ modalState: { show, images }, setModalState }) {
+function Modal() {
+  const dispatch = useDispatch();
+  const modal = useSelector(store => store.modal);
+  const {images, show} = modal;
   const handleCloseModal = () => {
-    setModalState({ show: false });
+    dispatch(hideModal());
   };
+
 
   return (
     show && (
