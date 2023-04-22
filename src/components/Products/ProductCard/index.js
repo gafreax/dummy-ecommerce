@@ -24,7 +24,7 @@ function ProductCard({ product }) {
     }
   }
   return (
-    <Card style={{ padding: "1rem", marginBottom: "1rem" }}>
+    <Card className="m-1">
       <Carousel images={images} onClick={() => {}} id={id} />
       <Card.Body>
         <Description>{description}</Description>

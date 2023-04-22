@@ -25,9 +25,9 @@ const Navigator = () => {
     };
 
     return <Row>
-        <Col>
-            <Button onClick={() => handleSkipPrev()}>indietro</Button>
-            <Button onClick={() => handleSkipNext()}>avanti</Button>
+        <Col className="d-flex justify-content-center">
+            <Button className="m-3" onClick={() => handleSkipPrev()}>indietro</Button>
+            <Button className="m-3" onClick={() => handleSkipNext()}>avanti</Button>
         </Col>
     </Row>
 };

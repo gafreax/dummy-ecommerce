@@ -15,13 +15,11 @@ const Products = (productsStore) => {
     } else if(!loading && items) {
         return <Col xs={12} md={9}>
             <Row>
-            { items?.map((product, index) => {
-                if(index >= skip && index < skip + UI_PRODUCTS_VIEW_COUNT) {
-                    return <Col key={`c-${product.id}`} xs={12} md={6}>
-                            <ProductCard  product={product} />
-                        </Col> 
-                    }
-                })
+            { items?.slice(skip, skip + UI_PRODUCTS_VIEW_COUNT).map((product) => 
+                    <Col key={`c-${product.id}`} xs={12} md={6}>
+                        <ProductCard  product={product} />
+                    </Col> 
+                )
             }
             </Row>
         </Col>
