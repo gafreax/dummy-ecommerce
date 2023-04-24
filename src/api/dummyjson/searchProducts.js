@@ -2,7 +2,7 @@
 import { API_BASE_URL, API_FETCH_LIMIT } from "../../config.js";
 import { fetchDataFailure, fetchDataRequest, fetchDataSuccess } from "../../store/dummyjson/actions.js";
 
-const searchProducts = async (dispatch,searchText) => {
+const searchProducts = async ({ dispatch, searchText }) => {
     dispatch(fetchDataRequest());
     try {
         const searchFilter = `/search?q=${searchText}&`;

@@ -54,7 +54,7 @@ const AddProduct = () => {
         <Form onSubmit={handleSubmit}>
             <InputString 
                 id={"product-name"} 
-                label={"Nome del prodort"}
+                label={"Nome del prodotto"}
                 placeholder={"Inserisci il nome del prodotto"}
                 max={30}
             />
@@ -68,7 +68,6 @@ const AddProduct = () => {
                 id={"product-price"}
                 label={"Prezzo del prodotto"}
                 placeholder={"Inserisci il prezzo del prodotto"}
-                max={null}
             />
             <InputNumber
                 id={"product-discount"}

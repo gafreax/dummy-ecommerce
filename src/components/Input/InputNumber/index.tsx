@@ -20,9 +20,9 @@ const InputNumber = (props: InputNumberProps) => {
 
     const handleOnBlur = () => {
         const isNumber = ref.current && !isNaN(parseInt(ref.current.value));
-        if(!isNumber ) {
-            setValid(ERROR);
-        } else if (max && (ref.current && !isInRange({ value: ref.current.value, max}))) {
+        const notInRange = max && (ref.current && !isInRange({ value: ref.current.value, max}));
+        const error = !isNumber || notInRange;
+        if(error ) {
             setValid(ERROR);
         } else {
             setValid(VALID);

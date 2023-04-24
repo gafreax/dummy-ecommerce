@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
-import searchProducts from "../../api/dummyjson/searchProducts";
+
 import fetchProducts from "../../api/dummyjson/fetchProducts";
 
 import Categories from "../../components/Categories/index.js";
@@ -12,20 +12,32 @@ import Navigator from '../../components/Navigator/index.tsx';
 
 function Home() {
     const dispatch = useDispatch();
-    const [searchText, setSearchText] = useState("");
+
     const products = useSelector((state) => state.products);
 
-    useEffect(() => {
-        if(searchText.trim().length === 0 ) {
+    // chiamato quando cambia loaded o skip
+    const fetchProductsCallback = useCallback(() => {
+        if(products.skip >= products.loaded || products.loaded === 0) {
             fetchProducts(dispatch, products.loaded);
-        } else {
-            searchProducts(dispatch, searchText);
         }
-    }, [dispatch, searchText, products.loaded])
+    }, [dispatch, products.loaded, products.skip]);
+    
+
+    // effect (memoizied) chiamato quando cambia searchText o una funzione dipendente
+    useMemo(() => {
+        console.log("memo called");
+        fetchProductsCallback();
+    }, [fetchProductsCallback]);
+
+    // effect (memoizied) chiamato all'inizio della pagina
+    useMemo(() => {
+        console.log("memo init called");
+        fetchProducts(dispatch, 0);
+    }, [dispatch]);
 
     return (
     <Container>
-        <Header setSearchText={setSearchText} />
+        <Header />
         <Row>
             <Categories />
             <Products products={products} />

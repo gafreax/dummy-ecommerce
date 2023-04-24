@@ -9,6 +9,7 @@ const ERROR = "ERROR";
 const VALID = "VALID";
 
 const InputString = (props: InputStringProps) => {
+    const [used, setUsed] = useState<boolean>(false);
     const { id, label, placeholder, max } = props;
     const ref = useRef<HTMLInputElement>(null);
     const [valid, setValid] = useState<string>("");
@@ -18,7 +19,11 @@ const InputString = (props: InputStringProps) => {
         if(!ref.current || (max && (ref.current.value.length > max))) {
             setValid(ERROR);
         } else {
-            setValid(VALID);
+            if(used && ref.current.value.length === 0) {
+                setValid(ERROR);
+            } else {
+                setValid(VALID);
+            }
         }
     }
 
@@ -26,6 +31,7 @@ const InputString = (props: InputStringProps) => {
         <Form.Label>{label}</Form.Label>
         <Form.Control 
             className={`${valid}`}
+            onFocus={() => setUsed(true)}
             onBlur={() => handleOnBlur()}
             ref={ref}
             id={id}

@@ -19,7 +19,6 @@ export const fetchDataFailure = (error) => ({
     payload: error,
 });
 
-
 export const changeSkip = (skip) => ({
     type: CHANGE_SKIP,
     payload: skip,

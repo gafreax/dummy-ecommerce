@@ -5,11 +5,11 @@ const generateImages = (images) => {
     return images.map((image, index) => {
         const className = `carousel-item ${index === 0 && "active"}`;
         return (
-            <div key={`key-${image}`} className={className}>
+            <div key={`key-${image}`} style={{padding: "8px"}} className={className}>
                 <img
                     src={image}
-                    className="p-1 d-block w-100 rounded mh-20"
                     alt={image}
+                    style={{ width: "100%"}}
                 />
             </div>
         );
@@ -22,6 +22,7 @@ function Carousel({ id, images, onClick }) {
             className="carousel slide carousel-dark"
             data-testid="carousel"
             id={`carousel-${id}`}
+            style={{maxHeight: "240px"}}
         >
             <div className="carousel-inner" onClick={() => onClick()}>
                 {images && generateImages(images)}

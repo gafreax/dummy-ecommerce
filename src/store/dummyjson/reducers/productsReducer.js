@@ -25,7 +25,7 @@ const productsReducer = (state = initialState, action) => {
             loading: false,
             items: action.payload.products,
             total: action.payload.total,
-            loaded: state.loaded + action.payload.products.lenght
+            loaded: action.payload.products[action.payload.products.length-1].id
         };
     case FETCH_DATA_FAILURE:
         return {

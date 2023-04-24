@@ -24,36 +24,33 @@ function Login() {
 		}
 	};
 
+	if(cookies.auth) {
+		return <Navigate replace to="/" />;
+	}
 	return (
 		<Container>
-			{cookies.auth ? (
-				<Navigate replace to="/" />
-			) : (
-				<>
-					<Row>
-						<Col>
-							<h1>Login</h1>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<Form>
-								<InputGroup>
-									<InputGroup.Text>Username</InputGroup.Text>
-									<Form.Control ref={usernameRef}/>
-								</InputGroup>
-								<br />
-								<InputGroup>
-									<InputGroup.Text>Password</InputGroup.Text>
-									<Form.Control type="password" ref={passwordRef} />
-								</InputGroup>
-								<br />
-								<Button onClick={handleClick}>Login</Button>
-							</Form>
-						</Col>
-					</Row>
-				</>
-			)}
+			<Row>
+				<Col>
+					<h1>Login</h1>
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					<Form>
+						<InputGroup>
+							<InputGroup.Text>Username</InputGroup.Text>
+							<Form.Control ref={usernameRef}/>
+						</InputGroup>
+						<br />
+						<InputGroup>
+							<InputGroup.Text>Password</InputGroup.Text>
+							<Form.Control type="password" ref={passwordRef} />
+						</InputGroup>
+						<br />
+						<Button onClick={handleClick}>Login</Button>
+					</Form>
+				</Col>
+			</Row>
 		</Container>
 	);
 }
