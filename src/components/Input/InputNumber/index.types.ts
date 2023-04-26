@@ -1,4 +1,6 @@
 export type InputNumberProps = {
+    action?: string;
+    dispatch?: Function;
     id: string;
     label: string;
     placeholder: string;

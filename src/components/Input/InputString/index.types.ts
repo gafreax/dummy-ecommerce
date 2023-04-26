@@ -1,6 +1,8 @@
 export type InputStringProps = {
+    action?: string;
+    dispatch?: Function;
     id: string;
     label: string;
-    placeholder: string;
     max?: number;
+    placeholder: string;
 }
