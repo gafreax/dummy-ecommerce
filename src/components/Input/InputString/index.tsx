@@ -13,17 +13,24 @@ const InputString = (props: InputStringProps) => {
     const [used, setUsed] = useState<boolean>(false);
     const ref = useRef<HTMLInputElement>(null);
     const [valid, setValid] = useState<string>("");
-    const { id, label, placeholder, max } = props;
+    const { id, label, placeholder, max , required } = props;
     
+    const handleOnChange = () => {
+        setValid("");
+        const { value } = ref.current || { value: "" };
+        const hasValue = value.trim().length > 0
+        setUsed(hasValue)
+    }
+
     const handleOnBlur = () => {
         console.log("blur del campo " + id);
         const { value } = ref.current || { value: "" };
         let validation = VALID;
-        if(max && value.length > max) {
-            validation = ERROR;
-        } else if(used && value.length === 0) {
+        if(required && value.length === 0) {
             validation = REQUIRED;
-        }
+        } else if(max && value.length > max) {
+            validation = ERROR;
+        } 
         setValid(validation);
         if(props.dispatch && props.action) {
             const payload = {
@@ -33,20 +40,21 @@ const InputString = (props: InputStringProps) => {
             props.dispatch({type: props.action, payload });
         }
     }
-
-    return <Form.Group className={`mb-3 p-2 ${valid}`}>
-        <Form.Label>{label}</Form.Label>
+    const className = ((used && !required) || required) && valid;
+    return <Form.Group className={`mb-3 p-2 ${className}`}>
+        <Form.Label>{label}{required && '*'}</Form.Label>
         <Form.Control 
-            className={`${valid}`}
-            onFocus={() => setUsed(true)}
+            className={`${className}`}
+            onChange={() => handleOnChange()}
             onBlur={() => handleOnBlur()}
             ref={ref}
             id={id}
             type="text" 
             placeholder={placeholder}
         />
-        { valid === VALID && <Form.Control.Feedback style={{display: "block"}}>Corretto</Form.Control.Feedback> }
+        { ((used && !required) || required) && valid === VALID && <Form.Control.Feedback style={{display: "block"}}>Corretto</Form.Control.Feedback> }
         { valid === ERROR && <Form.Control.Feedback style={{display: "block"}} type="invalid">Errore</Form.Control.Feedback> }
+        { valid === REQUIRED && <Form.Control.Feedback style={{display: "block"}} type="invalid">Richiesto</Form.Control.Feedback> }
     </Form.Group>
 };
 

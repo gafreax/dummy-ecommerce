@@ -5,6 +5,7 @@ export type InputNumberProps = {
     label: string;
     placeholder: string;
     max?: number;
+    required?: boolean;
 }
 
 export type InRangeProps = {

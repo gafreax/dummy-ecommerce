@@ -16,19 +16,26 @@ const isInRange = (props: InRangeProps) => {
 
 const InputNumber = (props: InputNumberProps) => {
     const [used, setUsed] = useState<boolean>(false);
-    const { id, label, placeholder, max } = props;
+    const { id, label, placeholder, max, required } = props;
     const ref = useRef<HTMLInputElement>(null);
     const [valid, setValid] = useState<string>("");
+
+    const handleOnChange = () => {
+        setValid("");
+        const { value } = ref.current || { value: "" };
+        const hasValue = value.trim().length > 0
+        setUsed(hasValue)
+    }
 
     const handleOnBlur = () => {
         const isNumber = ref.current && !isNaN(parseInt(ref.current.value));
         const { value } = ref.current || { value: "" };
         const notInRange = max &&  !isInRange({ value, max});
         let validation = VALID;
-        if(!isNumber || notInRange ) {
-            validation = ERROR;
-        } else if(used && value.length === 0) {
+        if( required && value.length === 0) {
             validation = REQUIRED;
+        } else if((!isNumber || notInRange) && used) {
+            validation = ERROR;
         }
         setValid(validation);
         if(props.dispatch && props.action) {
@@ -40,20 +47,22 @@ const InputNumber = (props: InputNumberProps) => {
         }
     }
 
-
-    return <Form.Group className={`mb-3 p-2 ${valid}`}>
+    const className = ((used && !required) || required) && valid;
+    
+    return <Form.Group className={`mb-3 p-2 ${className}`}>
         <Form.Label>{label}</Form.Label>
         <Form.Control 
-            className={`${valid}`}
+            className={`${className}`}
             onBlur={() => handleOnBlur()}
-            onFocus={() => setUsed(true)}
+            onChange={() => handleOnChange()}
             ref={ref}
             id={id}
             type="text" 
             placeholder={placeholder}
         />
-        { valid === VALID && <Form.Control.Feedback style={{display: "block"}}>Corretto</Form.Control.Feedback> }
+        { ((used && !required) || required) && valid === VALID && <Form.Control.Feedback style={{display: "block"}}>Corretto</Form.Control.Feedback> }
         { valid === ERROR && <Form.Control.Feedback style={{display: "block"}} type="invalid">Errore</Form.Control.Feedback> }
+        { valid === REQUIRED && <Form.Control.Feedback style={{display: "block"}} type="invalid">Richiesto</Form.Control.Feedback> }
     </Form.Group>
 };
 

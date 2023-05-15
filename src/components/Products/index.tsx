@@ -6,8 +6,8 @@ import { UI_PRODUCTS_VIEW_COUNT } from "../../config";
 import GhostCard from "./GhostCard/index.js";
 import ProductCard from "./ProductCard/index.js";
 
-const Products = (productsStore) => {
-    const { loading, items, skip } = productsStore.products;
+const Products = ({products, setCart }) => {
+    const { loading, items, skip } = products;
     if(loading && !items) {
         return <Col xs={12} md={9}>
             <Row> <GhostCard /> <GhostCard /> <GhostCard /> <GhostCard /> </Row>
@@ -17,7 +17,7 @@ const Products = (productsStore) => {
             <Row xs={1} md={2} className="g-4">
             { items?.slice(skip, skip + UI_PRODUCTS_VIEW_COUNT).map((product) => 
                     <Col key={`c-${product.id}`} xs={12} md={6}>
-                        <ProductCard  product={product} />
+                        <ProductCard  product={product} setCart={setCart}/>
                     </Col> 
                 )
             }

@@ -5,16 +5,37 @@ import { formReducer, initialState } from "./reducer.ts";
 
 import "./style.scss";
 
+import { FormState } from "./index.types.ts";
+
 import InputString from "../../components/Input/InputString/index.tsx";
 import InputNumber from "../../components/Input/InputNumber/index.tsx";
 
 const AddProduct = () => {
-    const [state, dispatch] = useReducer(formReducer, initialState as ProductForm|undefined);
+    const [state, dispatch] = useReducer(formReducer, initialState as FormState);
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("send");
         console.dir(state);
+        const { product } = state;
+        const data = {
+            brand: product?.brand?.value,
+            category: product?.category?.value,
+            description: product?.description?.value,
+            discountPercentage: product?.discountPercentage?.value,
+            price: product?.price?.value,
+            rating: product?.rating?.value,
+            stock: product?.stock?.value,
+            title: product?.title?.value
+        }
+        console.log(data);
+        fetch('https://dummyjson.com/products/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(console.log);
     };
 
     return (
@@ -28,12 +49,13 @@ const AddProduct = () => {
                     max={30}
                     dispatch={dispatch}
                     action="SET_PRODUCT_TITLE"
+                    required={true}
                 />
                 <InputString
                     id={"product-descripton"}
                     label={"Descrizione del prodotto"}
                     placeholder={"Inserisci la descrizione del prodotto"}
-                    max={500}
+                    max={100}
                     dispatch={dispatch}
                     action="SET_PRODUCT_DESCRIPTION"
                 />
@@ -43,6 +65,7 @@ const AddProduct = () => {
                     placeholder={"Inserisci il prezzo del prodotto"}
                     dispatch={dispatch}
                     action="SET_PRODUCT_PRICE"
+                    required={true}
                 />
                 <InputNumber
                     id={"product-discount"}

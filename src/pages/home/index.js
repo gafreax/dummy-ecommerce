@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,6 +12,7 @@ import Navigator from '../../components/Navigator/index.tsx';
 
 function Home() {
     const dispatch = useDispatch();
+    const [cart, setCart] = useState([]);
 
     const products = useSelector((state) => state.products);
 
@@ -35,12 +36,19 @@ function Home() {
         fetchProducts(dispatch, 0);
     }, [dispatch]);
 
+
+    useEffect(() => {
+        const cartJSON = localStorage.getItem("cart");
+        const cart = cartJSON ? JSON.parse(cartJSON) : [];
+        setCart(cart.length);
+    }, []);
+
     return (
     <Container>
-        <Header />
+        <Header cart={cart}/>
         <Row>
             <Categories />
-            <Products products={products} />
+            <Products products={products} setCart={setCart}/>
         </Row>
         <Navigator />
     </Container>

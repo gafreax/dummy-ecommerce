@@ -5,4 +5,5 @@ export type InputStringProps = {
     label: string;
     max?: number;
     placeholder: string;
+    required?: boolean;
 }
