@@ -10,15 +10,19 @@ import "./style.css";
 import Button from "../../Button";
 import Carousel from "../../Carousel";
 import Description from "../../Description/index.tsx";
+import useCartStorage from "../../../hooks/useCartStorage.js";
 
 
-function ProductCard({ product, setCart }) {
-  const { description, id, images, title } = product;
+function ProductCard({ product }) {
   const dispatch = useDispatch();
   const modal = useSelector(store => store.modal);
+  const intialCart = JSON.parse(localStorage.getItem("cart"));
+  const [value, setValue] = useCartStorage(intialCart);
+
+  const { description, id, images, title } = product;
 
   const addToCart = () => {
-    setCart({id, title});
+    setValue([...value, {id, title}])
   }
 
   const imageHandler = () => {

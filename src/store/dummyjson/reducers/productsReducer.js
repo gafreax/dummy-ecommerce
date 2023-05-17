@@ -19,6 +19,7 @@ const productsReducer = (state = initialState, action) => {
             error: null,
         };
     case FETCH_DATA_SUCCESS:
+        
         return {
             ...state,
             error: null,

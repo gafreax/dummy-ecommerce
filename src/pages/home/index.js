@@ -12,7 +12,7 @@ import Navigator from '../../components/Navigator/index.tsx';
 
 function Home() {
     const dispatch = useDispatch();
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState([{}]);
 
     const products = useSelector((state) => state.products);
 
@@ -40,15 +40,15 @@ function Home() {
     useEffect(() => {
         const cartJSON = localStorage.getItem("cart");
         const cart = cartJSON ? JSON.parse(cartJSON) : [];
-        setCart(cart.length);
+        setCart(cart);
     }, []);
 
     return (
     <Container>
-        <Header cart={cart}/>
+        <Header />
         <Row>
             <Categories />
-            <Products products={products} setCart={setCart}/>
+            <Products products={products} setCart={setCart} cart={cart}/>
         </Row>
         <Navigator />
     </Container>
