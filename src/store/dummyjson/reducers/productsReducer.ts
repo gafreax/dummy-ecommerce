@@ -1,6 +1,9 @@
 import { CHANGE_SKIP, FETCH_DATA_FAILURE, FETCH_DATA_SUCCESS, FETCH_DATA_REQUEST } from "../actions.js";
+import { Action } from "../index.types.js";
 
-const initialState = {
+import { ProductState } from "./productReducer.types.js";
+
+const initialState:ProductState = {
     error: null,
     loading: false,
     items: [],
@@ -9,7 +12,7 @@ const initialState = {
     total: 0,
 };
 
-const productsReducer = (state = initialState, action) => {
+const productsReducer = (state = initialState, action: Action) => {
 
     switch (action.type) {
     case FETCH_DATA_REQUEST:

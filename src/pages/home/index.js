@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -9,10 +9,10 @@ import Categories from "../../components/Categories/index.js";
 import Header from '../../components/Header/index.tsx';
 import Products from "../../components/Products/index.tsx";
 import Navigator from '../../components/Navigator/index.tsx';
+import { setCart } from "../../store/dummyjson/actions.js";
 
 function Home() {
     const dispatch = useDispatch();
-    const [cart, setCart] = useState([{}]);
 
     const products = useSelector((state) => state.products);
 
@@ -40,15 +40,17 @@ function Home() {
     useEffect(() => {
         const cartJSON = localStorage.getItem("cart");
         const cart = cartJSON ? JSON.parse(cartJSON) : [];
-        setCart(cart);
-    }, []);
+        if(cart.length > 0 ) {
+            dispatch(setCart(cart));
+        }
+    }, [dispatch]);
 
     return (
     <Container>
-        <Header />
+        <Header link={"/checkout"} linkTitle={"Checkout"} showSearch={true} />
         <Row>
             <Categories />
-            <Products products={products} setCart={setCart} cart={cart}/>
+            <Products  loading={products.loading} items={products.items} skip={products.skip} />
         </Row>
         <Navigator />
     </Container>

@@ -13,6 +13,7 @@ import App from './App.js';
 import About from './pages/about/index.js'
 import Login from './pages/login/index.js';
 import AddProduct from './pages/add-product/index.tsx';
+import Checkout from './pages/checkout/index.tsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,6 +27,7 @@ root.render(
           <Route path='/about' element={<About />} />
           <Route path='/login' element={<Login />} />
           <Route path='/add/product' element={<AddProduct />} />
+          <Route path='/checkout' element={<Checkout />} />
           <Route path='*' element={<h1>404 Not Found</h1>} />
 
         </Routes>

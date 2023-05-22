@@ -1,24 +1,36 @@
 import React from "react";
-import { Cart } from "react-bootstrap-icons";
-import { Col, Row } from "react-bootstrap";
+import { Cart, Cash } from "react-bootstrap-icons";
+import { Badge, Button, Col, Row } from "react-bootstrap";
 import Search from "../Search/index.jsx";
-import useLocalStorage from "../../hooks/useLocalStorage.js";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { HeaderProps } from "./index.types.js";
 
-const Header = ( {setSearchText} : { setSearchText: Function }) => {
-    const [value,] = useLocalStorage("cart");
+const Header = ( { link, linkTitle, linkType, setSearchText, showSearch } :  HeaderProps) => {
+    const state = useSelector( (store:any) => store.cart)
+    const currentPage = window.location.pathname.split("/").pop();
     
-    console.log("cart value", value);
-
     return<>
         <Row>
             <Col>
-                <h1>E-Commerce</h1>
+                <h1>E-Commerce </h1>
             </Col>
-            <Col>
-                {value.length} <Cart />
+            <Col style={{textAlign: "center", alignSelf: "center"}}>
+                <h3>
+                    <Badge bg="secondary">{currentPage?.length ? currentPage : "home"}</Badge>
+                </h3>
+            </Col>
+            <Col xs={4} style={{textAlign: "right", alignSelf: "center"}}>
+                {state.cartItems.length} <Cart style={{marginLeft: "8px"}} /> {state.totalPrice} <Cash style={{marginLeft: "8px"}}/>
+                { link &&  <NavLink to={link}> 
+                        <Button variant={linkType || "info"} size="sm" style={{marginLeft: "8px"}}>
+                            {linkTitle}    
+                        </Button>
+                    </NavLink>
+                }
             </Col>
         </Row>
-        <Search handler={setSearchText} />
+        { showSearch && <Search handler={setSearchText} /> }
     </>;
 };
 

@@ -4,6 +4,18 @@ export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const CHANGE_SKIP = "CHANGE_SKIP";
 export const SHOW_MODAL = "SHOW_MODAL";
 export const HIDE_MODAL = "HIDE_MODAL";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const SET_CART = "SET_CART";
+
+export const addToCart = (cartItem) => ({
+    type: ADD_TO_CART,
+    payload: cartItem,
+});
+
+export const setCart = (cart) => ({
+    type: SET_CART,
+    payload: cart,
+});
 
 export const fetchDataRequest = () => ({
     type: FETCH_DATA_REQUEST,

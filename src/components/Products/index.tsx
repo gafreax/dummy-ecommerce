@@ -4,16 +4,11 @@ import { Col, Row } from "react-bootstrap";
 import { UI_PRODUCTS_VIEW_COUNT } from "../../config";
 
 import GhostCard from "./GhostCard/index.js";
-import ProductCard from "./ProductCard/index.js";
+import ProductCard from "./ProductCard/index.tsx";
+import { ProductItem, ProductState } from "../../store/dummyjson/reducers/productReducer.types.js";
 
-type ProductInterface = {
-    cart: any,
-    products: any,
-    setCart: Function
-}
-
-const Products = ({cart, products, setCart }: ProductInterface) => {
-    const { loading, items, skip } = products;
+const Products = ({ loading, items, skip }:  ProductState ) => {
+    console.log("Products", loading, items, skip);
     if(loading && !items) {
         return <Col xs={12} md={9}>
             <Row> <GhostCard /> <GhostCard /> <GhostCard /> <GhostCard /> </Row>
@@ -21,9 +16,9 @@ const Products = ({cart, products, setCart }: ProductInterface) => {
     } else if(!loading && items) {
         return <Col xs={12} md={9}>
             <Row xs={1} md={2} className="g-4">
-            { items?.slice(skip, skip + UI_PRODUCTS_VIEW_COUNT).map((product: any) => 
-                    <Col key={`c-${product.id}`} xs={12} md={6}>
-                        <ProductCard product={product} />
+            { items?.slice(skip, skip + UI_PRODUCTS_VIEW_COUNT).map(({ description, id, images, title, price}: ProductItem) => 
+                    <Col key={`c-${id}`} xs={12} md={6}>
+                        <ProductCard description={description} id={id} images={images} title={title} price={price} />
                     </Col> 
                 )
             }

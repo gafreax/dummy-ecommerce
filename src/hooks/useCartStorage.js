@@ -8,14 +8,14 @@ const localStorageValue = (intitalValue) => {
 
 const useCartStorage = (defaultValue = []) => {
     const intitalValue = localStorageValue(defaultValue);
-    const [value, setValue] = useState(intitalValue);
+    const [cartStorage, setCartStorage] = useState(intitalValue);
 
     useEffect(() => {
         console.log("effect del nostro hook");
-        localStorage.setItem(KEY, JSON.stringify(value));
-    }, [value, setValue]);
+        localStorage.setItem(KEY, JSON.stringify(cartStorage));
+    }, [cartStorage, setCartStorage]);
 
-    return [value, setValue];
+    return [ cartStorage, setCartStorage];
 }
 
 export default useCartStorage;
