@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Container, Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./style.scss";
@@ -25,7 +25,7 @@ const Checkout = () => {
         if(cart.length > 0 ) {
             dispatch(setCart(cart));
         }
-    }, []);
+    }, [dispatch]);
 
     let checkoutItems:CheckoutItem[] = [];
 
