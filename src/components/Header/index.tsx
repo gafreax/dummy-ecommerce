@@ -17,7 +17,7 @@ const Header = ({ link, linkTitle, linkType, setSearchText, showSearch }: Header
         console.log(width);
         const currentWidthISMobile = window.innerWidth <= 768;
         setIsMobile(currentWidthISMobile);
-        console.log("siamo mobile   ",currentWidthISMobile);
+        console.log("siamo mobile   ", currentWidthISMobile);
     }
 
     useEffect(() => {
@@ -39,15 +39,27 @@ const Header = ({ link, linkTitle, linkType, setSearchText, showSearch }: Header
                     </h3>
                 </Col>
             }
-            <Col xs={12} md={4} style={{ textAlign: "right", alignSelf: "center" }}>
-                {state.cartItems.length} <Cart style={{ marginLeft: "8px" }} /> {state.totalPrice} <Cash style={{ marginLeft: "8px" }} />
-                {link && <NavLink to={link}>
-                    <Button variant={linkType || "info"} size="sm" style={{ marginLeft: "8px" }}>
-                        {linkTitle}
-                    </Button>
-                </NavLink>
-                }
-            </Col>
+            {
+                isMobile && <Col xs={4} style={{ textAlign: "right", alignSelf: "center" }}>
+                    {link && <NavLink to={link}>
+                        <Button variant={linkType || "info"} size="sm" style={{ marginLeft: "8px", paddingLeft:"4px" ,paddingRight:"4px"}}>
+                            <Cart style={{ marginLeft: "4px" }} />
+                        </Button>
+                    </NavLink>}
+                </Col>
+            }
+            {
+                !isMobile &&
+                <Col xs={12} md={4} style={{ textAlign: "right", alignSelf: "center" }}>
+                    {state.cartItems.length} <Cart style={{ marginLeft: "8px" }} /> {state.totalPrice} <Cash style={{ marginLeft: "8px" }} />
+                    {link && <NavLink to={link}>
+                        <Button variant={linkType || "info"} size="sm" style={{ marginLeft: "8px" }}>
+                            {linkTitle}
+                        </Button>
+                    </NavLink>
+                    }
+                </Col>
+            }
         </Row>
         {showSearch && <Search handler={setSearchText} />}
     </>;
