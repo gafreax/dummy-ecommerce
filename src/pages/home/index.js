@@ -40,7 +40,7 @@ function Home() {
     useEffect(() => {
         const cartJSON = localStorage.getItem("cart");
         const cart = cartJSON ? JSON.parse(cartJSON) : [];
-        if(cart.length > 0 ) {
+        if(cart?.length > 0 ) {
             dispatch(setCart(cart));
         }
     }, [dispatch]);
