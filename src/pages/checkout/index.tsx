@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Trash as TrashIcon, XCircle as RemoveIcon, PlusCircleFill as AddIcon } from "react-bootstrap-icons";
 
 import "./style.scss";
 import Header from "../../components/Header";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { addToCart, removeFromCart, setCart } from "../../store/dummyjson/actions";
+import useCartStorage from "../../hooks/useCartStorage";
 
 type CheckoutItem = {
     id: string;
@@ -14,10 +16,10 @@ type CheckoutItem = {
     title: string;
 }
 
-
 const Checkout = () => {
     const state = useSelector((store: any) => store.cart);
     const dispatch = useDispatch();
+    const [, setCartStorage] = useCartStorage(undefined);
 
     useEffect(() => {
         const cartJSON = localStorage.getItem("cart");
@@ -42,15 +44,43 @@ const Checkout = () => {
             });
         }
     });
+
     const handleAddItem = (item: CheckoutItem) => {
-        dispatch(addToCart({
-            id: item.id,
-            title: item.title,
-            price: item.price
-        }));
+        const newCartItem = {id: item.id, title: item.title, price: item.price};
+        const cart = window.localStorage.getItem("cart") || "";
+        const cartJSON = JSON.parse(cart);
+        if(cartJSON) {
+            setCartStorage([...cartJSON, newCartItem]);
+        } else {
+            setCartStorage([newCartItem]);
+        }
+        dispatch(addToCart(newCartItem));
     }
+
     const handleRemoveItem = (item: CheckoutItem) => {
+        const cart = window.localStorage.getItem("cart") || "";
+        const cartJSON = JSON.parse(cart);
         dispatch(removeFromCart(item.id));
+        let removed = false;
+        let updatedCart = [];
+        for (let i = 0; i < cartJSON.length; i++) {
+            if (cartJSON[i].id !== item.id || removed) {
+                updatedCart.push(cartJSON[i]);
+            } else if( cartJSON[i].id === item.id) {
+                removed = true;
+            }
+        }
+        setCartStorage(updatedCart);
+    }
+
+    const handleRemoveAllItems = (item: CheckoutItem) => {
+        const cart = window.localStorage.getItem("cart") || "";
+        const cartJSON = JSON.parse(cart);
+        const updatedCart = cartJSON.filter((cartItem: any) => {
+            return cartItem.id !== item.id;
+        });
+        setCartStorage(updatedCart);
+        dispatch(setCart(updatedCart));
     }
 
     return <Container>
@@ -68,7 +98,11 @@ const Checkout = () => {
                     checkoutItems.map((item: CheckoutItem) => <tr key={item.id}>
                         <td>{item.title}</td>
                         <td>{item.price}</td>
-                        <td>{item.quantity} <button onClick={() =>handleRemoveItem(item)}>-</button><button onClick={() => handleAddItem(item)}>+</button><button>X</button></td>
+                        <td>{item.quantity} 
+                            <AddIcon className="icon" onClick={() => handleAddItem(item)} />
+                            <RemoveIcon className="icon" onClick={() =>handleRemoveItem(item)}/>
+                            <TrashIcon className="icon" onClick={() => handleRemoveAllItems(item)} />
+                        </td>
                     </tr>)
                 }
             </tbody>
@@ -97,7 +131,3 @@ const Checkout = () => {
 }
 
 export default Checkout;
-
-function dispatch(arg0: any) {
-    throw new Error("Function not implemented.");
-}

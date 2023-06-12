@@ -17,11 +17,11 @@ import { ProductItem } from "../../../store/dummyjson/reducers/productReducer.ty
 
 function ProductCard({ description, id, images, title, price }: ProductItem) {
   const dispatch = useDispatch();
-  const modal = useSelector(store => store.modal);
-  const [, setCartStorage] = useCartStorage(null);
+  const modal = useSelector((store:any) => store.modal);
+  const [, setCartStorage] = useCartStorage(undefined);
 
   const handleClick = () => {
-    const cart = window.localStorage.getItem("cart");
+    const cart = window.localStorage.getItem("cart") || "";
     const cartJSON = JSON.parse(cart);
     const newCartItem = {id, title, price};
     if(cartJSON) {
@@ -45,9 +45,9 @@ function ProductCard({ description, id, images, title, price }: ProductItem) {
     <Card className="m-1">
       <Carousel images={images} onClick={() => {}} id={id} />
       <Card.Body>
-        <Description>{description}</Description>
-        <Button onClick={(e) => imageHandler()}>Vedi immagini</Button>
-        <Button onClick={(e) => handleClick()}><CartPlus />Aggiungi</Button>
+        <Description description={description} />
+        <Button onClick={() => imageHandler()}>Vedi immagini</Button>
+        <Button onClick={() => handleClick()}><CartPlus />Aggiungi</Button>
       </Card.Body>
     </Card>
   );

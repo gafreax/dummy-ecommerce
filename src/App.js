@@ -7,8 +7,6 @@ import { Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-// import fetchProducts from "./api/dummyjson/fetchProducts.js";
-
 import Home from "./pages/home/index.js";
 import Modal from "./components/Modal/index.js";
 

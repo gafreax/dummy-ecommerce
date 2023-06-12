@@ -21,7 +21,7 @@ const Navigator = () => {
 
     const handleSkipNext = () => {
         const skip = products.skip + UI_PRODUCTS_VIEW_COUNT;
-        if (skip <= products.total) {
+        if (skip < products.total) {
             dispatch(changeSkip(skip));
         }
     };

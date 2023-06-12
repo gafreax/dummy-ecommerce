@@ -1,11 +1,18 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { showCategories } from "../index.js";
 
 import "../style.scss"
 
 import fetchCategoryProducts from "../../../api/dummyjson/fetchCategoryProducts.js";
 import { Col } from 'react-bootstrap';
+
+const showCategories = (categories, setSelectedCategory) => {
+  return categories?.map(category => {
+    return <span key={`cat-${category}`} onClick={() => setSelectedCategory(category)}>
+      {category}
+    </span>
+  });
+};
 
 function CategoriesDesktop ({categories}) {
     
@@ -23,7 +30,7 @@ function CategoriesDesktop ({categories}) {
 
 
     return <Col xs={12} md={3} >
-      <div className="dummy-categories">{ showCategories(categories,false) }</div>
+      <div className="dummy-categories">{ showCategories(categories, setSelectedCategory) }</div>
     </Col>
     
 }

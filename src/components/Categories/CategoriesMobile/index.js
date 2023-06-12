@@ -1,11 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Accordion,Badge } from "react-bootstrap";
-import { showCategories } from "../index.js";
 
 import "../style.scss"
 
 import fetchCategoryProducts from "../../../api/dummyjson/fetchCategoryProducts.js";
+
+
+const showCategories = (categories, setSelectedCategory) => {
+  return categories?.map(category => {
+      return <Badge className="badge-categories m-1" key={`cat-${category}`} onClick={() => setSelectedCategory(category)}>
+        {category}
+      </Badge>
+  });
+};
 
 function CategoriesMobile ({categories}) {
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -19,11 +27,11 @@ function CategoriesMobile ({categories}) {
     }, [dispatch, selectedCategory]);
 
 
-    return <Accordion defaultActiveKey="0">
+    return <Accordion >
     <Accordion.Item eventKey="0">
       <Accordion.Header>Categories</Accordion.Header>
       <Accordion.Body>
-      { showCategories(categories,true) }
+      { showCategories(categories,setSelectedCategory) }
       </Accordion.Body>
       </Accordion.Item>
     </Accordion>

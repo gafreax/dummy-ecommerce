@@ -4,11 +4,11 @@ import "./style.css";
 import { Card } from "react-bootstrap";
 
 interface Props {
-    children: JSX.Element
+    description: string;
 }
 
-const Description: React.FC<Props> = ({children}) => {
-    return <Card.Text data-testid="description" className="myDescription description card-text">{children}</Card.Text>
+const Description: React.FC<Props> = ({description}) => {
+    return <Card.Text data-testid="description" className="myDescription description card-text">{description}</Card.Text>
 }
 
 export default Description
