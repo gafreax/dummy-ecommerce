@@ -1,19 +1,24 @@
 import React, { useEffect } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Trash as TrashIcon, XCircle as RemoveIcon, PlusCircleFill as AddIcon } from "react-bootstrap-icons";
 
 import "./style.scss";
 import Header from "../../components/Header";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { addToCart, removeFromCart, setCart } from "../../store/dummyjson/actions";
 import useCartStorage from "../../hooks/useCartStorage";
+import QuantityButtons from "../../components/QuantityButtons";
 
 type CheckoutItem = {
     id: string;
     quantity: number;
     price: number;
     title: string;
+}
+
+interface ItemReducerInterface {
+    item: CheckoutItem,
+    action: string
 }
 
 const Checkout = () => {
@@ -46,10 +51,10 @@ const Checkout = () => {
     });
 
     const handleAddItem = (item: CheckoutItem) => {
-        const newCartItem = {id: item.id, title: item.title, price: item.price};
+        const newCartItem = { id: item.id, title: item.title, price: item.price };
         const cart = window.localStorage.getItem("cart") || "";
         const cartJSON = JSON.parse(cart);
-        if(cartJSON) {
+        if (cartJSON) {
             setCartStorage([...cartJSON, newCartItem]);
         } else {
             setCartStorage([newCartItem]);
@@ -66,7 +71,7 @@ const Checkout = () => {
         for (let i = 0; i < cartJSON.length; i++) {
             if (cartJSON[i].id !== item.id || removed) {
                 updatedCart.push(cartJSON[i]);
-            } else if( cartJSON[i].id === item.id) {
+            } else if (cartJSON[i].id === item.id) {
                 removed = true;
             }
         }
@@ -81,6 +86,17 @@ const Checkout = () => {
         });
         setCartStorage(updatedCart);
         dispatch(setCart(updatedCart));
+    }
+
+    const handleItemReducer = ({ item, action }: ItemReducerInterface) => {
+        switch (action) {
+            case "add":
+                return handleAddItem(item);
+            case "remove":
+                return handleRemoveItem(item);
+            case "removeAll":
+                return handleRemoveAllItems(item);
+        }
     }
 
     return <Container>
@@ -98,10 +114,11 @@ const Checkout = () => {
                     checkoutItems.map((item: CheckoutItem) => <tr key={item.id}>
                         <td>{item.title}</td>
                         <td>{item.price}</td>
-                        <td>{item.quantity} 
-                            <AddIcon className="icon" onClick={() => handleAddItem(item)} />
-                            <RemoveIcon className="icon" onClick={() => handleRemoveItem(item)}/>
-                            <TrashIcon className="icon" onClick={() => handleRemoveAllItems(item)} />
+                        <td>
+                            <QuantityButtons
+                                handleItemsQuantity={handleItemReducer}
+                                item={item}
+                            />
                         </td>
                     </tr>)
                 }
