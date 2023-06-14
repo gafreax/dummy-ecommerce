@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 
+
 import "./style.scss"
 
 import fetchCategories from "../../api/fetchCategories.js";
@@ -39,7 +40,9 @@ function Categories() {
     getCategories();
   }, []);
 
-  return (isMobile) ? <CategoriesMobile categories={categories}  /> : <CategoriesDesktop categories={categories} />;
+  return (isMobile) ?<>
+ 
+  <CategoriesMobile categories={categories} /></> : <CategoriesDesktop categories={categories} />;
 
 }
 
