@@ -1,6 +1,6 @@
 import React from "react";
-import { Cart, Cash} from "react-bootstrap-icons";
-import { Badge, Button, Col, Row } from "react-bootstrap";
+import { Cart, Cash } from "react-bootstrap-icons";
+import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
@@ -20,37 +20,18 @@ const Header = ({
 
     return (
         <>
-            <Row className="p-2">
-                <Col xs={8} md={3}>
-                    <h1>E-Commerce </h1>
+            <Row className="p-1">
+                <Col >
+                    <div> <h1>E-Commerce </h1></div>
                 </Col>
-                <Col
-                    xs={4}
-                    md={5}
-                    style={{ textAlign: "center", alignSelf: "center" }}
-                >
-                    <h3>
-                        <Badge bg="secondary">
-                            {currentPage?.length ? currentPage : "home"}
-                        </Badge>
-                    </h3>
-                </Col>
-                <Col
-                    xs={12}
-                    md={4}
-                    style={{ textAlign: "right", alignSelf: "center" }}
-                >
-                    {state.cartItems.length}{" "}
-                    <Cart style={{ marginLeft: "8px" }} />{" "}
-                    {state.totalPrice}{" "}
-                    <Cash style={{ marginLeft: "8px" }} />
+                <Col className=" text-end" >
+                    <span className="  badge  bg-danger">{state.cartItems.length}{" "}</span>
+                    <Cart className="ms-1  me-3" />{" "}
+                    <span className=" badge bg-success " >{state.totalPrice}{" "}</span>
+                    <Cash className="ms-1  me-3" />
                     {link && (
                         <NavLink to={link}>
-                            <Button
-                                variant={linkType || "info"}
-                                size="sm"
-                                style={{ marginLeft: "8px" }}
-                            >
+                            <Button variant={linkType || "info"} style={{ marginLeft: "8px" }}>
                                 {linkTitle}
                             </Button>
                         </NavLink>

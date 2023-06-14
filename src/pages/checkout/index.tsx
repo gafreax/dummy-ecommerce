@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Trash as TrashIcon, XCircle as RemoveIcon, PlusCircleFill as AddIcon } from "react-bootstrap-icons";
+import { Trash as TrashIcon, DashLg as RemoveIcon, PlusLg as AddIcon } from "react-bootstrap-icons";
 
 import "./style.scss";
 import Header from "../../components/Header";
@@ -98,10 +98,11 @@ const Checkout = () => {
                     checkoutItems.map((item: CheckoutItem) => <tr key={item.id}>
                         <td>{item.title}</td>
                         <td>{item.price}</td>
-                        <td>{item.quantity} 
-                            <AddIcon className="icon" onClick={() => handleAddItem(item)} />
-                            <RemoveIcon className="icon" onClick={() =>handleRemoveItem(item)}/>
-                            <TrashIcon className="icon" onClick={() => handleRemoveAllItems(item)} />
+                        <td>
+                            <AddIcon className="m-1" onClick={() => handleAddItem(item)} />
+                            <span  className="badge mt-1 bg-info   " ><strong>{item.quantity}</strong></span> 
+                            <RemoveIcon className="m-1" onClick={() =>handleRemoveItem(item)}/>
+                            <TrashIcon className=" m-1 text text-danger font-weight-bold" onClick={() => handleRemoveAllItems(item)} />
                         </td>
                     </tr>)
                 }
@@ -110,7 +111,7 @@ const Checkout = () => {
                 <tr>
                     <td>Totale</td>
                     <td>{state.totalPrice}</td>
-                    <td>{state.cartItems.length}</td>
+                    <td className="badge bg-danger mt-1 ms-4">{state.cartItems.length}</td>
                 </tr>
             </tfoot>
         </Table>
