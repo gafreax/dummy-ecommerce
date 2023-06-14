@@ -100,7 +100,7 @@ const Checkout = () => {
                         <td>{item.price}</td>
                         <td>{item.quantity} 
                             <AddIcon className="icon" onClick={() => handleAddItem(item)} />
-                            <RemoveIcon className="icon" onClick={() =>handleRemoveItem(item)}/>
+                            <RemoveIcon className="icon" onClick={() => handleRemoveItem(item)}/>
                             <TrashIcon className="icon" onClick={() => handleRemoveAllItems(item)} />
                         </td>
                     </tr>)

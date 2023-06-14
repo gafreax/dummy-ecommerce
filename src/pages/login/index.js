@@ -14,10 +14,12 @@ function Login() {
 	// const [loginOk, setLoginOk] = useState(null)
 	const usernameRef = useRef();
 	const passwordRef = useRef();
-
 	const handleClick = async () => {
+		console.log("auth")
 		const username = usernameRef.current.value;
 		const password = passwordRef.current.value;
+		console.log("username", username)
+		console.log("password", password)
 		const { token } = await fetchAuth({ username, password })
 		if( token ) {
 			setCookies("auth", true);
