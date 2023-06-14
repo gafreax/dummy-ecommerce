@@ -1,6 +1,6 @@
 import React from "react";
-import { Cart, Cash, Display } from "react-bootstrap-icons";
-import { Alert, Button, Col, Row } from "react-bootstrap";
+import { Cart, Cash } from "react-bootstrap-icons";
+import { Button, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
