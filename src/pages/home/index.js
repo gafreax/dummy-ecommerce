@@ -26,13 +26,11 @@ function Home() {
 
     // effect (memoizied) chiamato quando cambia searchText o una funzione dipendente
     useMemo(() => {
-        console.log("memo called");
         fetchProductsCallback();
     }, [fetchProductsCallback]);
 
     // effect (memoizied) chiamato all'inizio della pagina
     useMemo(() => {
-        console.log("memo init called");
         fetchProducts(dispatch, 0);
     }, [dispatch]);
 

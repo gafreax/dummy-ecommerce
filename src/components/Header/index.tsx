@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { HeaderProps } from "./index.types.js";
-import HeaderMobile from "./HeaderMobile/index.tsx";
-import HeaderDesktop from "./HeaderDesktop/index.tsx";
+import HeaderType from "./HeaderType/index.tsx";
 
 const getIsMobile = () => window.innerWidth <= 768
 
-const Header = ({
-    link,
-    linkTitle,
-    linkType,
-    setSearchText,
-    showSearch,
-}: HeaderProps) => {
+
+const Header = () => {
     const [width, setWidth] = useState(window.innerWidth);
     const [isMobile, setIsMobile] = useState(getIsMobile());
 
@@ -28,9 +21,10 @@ const Header = ({
     }, [width]);
 
     if(isMobile) {
-        return <HeaderMobile link={link} linkTitle={linkTitle} linkType={linkType} setSearchText={setSearchText} showSearch={showSearch} /> 
+       
+        return <HeaderType  /> 
     }
-    return <HeaderDesktop link={link} linkTitle={linkTitle} linkType={linkType} setSearchText={setSearchText} showSearch={showSearch} />;
-};
+    return <HeaderType  />;
+}
 
 export default Header;

@@ -10,7 +10,7 @@ const useLocalStorage = (key, defaultValue = []) => {
     const [value, setValue] = useState(intitalValue);
 
     useEffect(() => {
-        console.log("effect del nostro hook");
+
         localStorage.setItem(key, JSON.stringify(value));
     }, [value, setValue, key]);
 

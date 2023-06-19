@@ -7,6 +7,5 @@ export interface HeaderProps {
     link?: string,
     linkTitle?: string,
     linkType?: "primary" | "secondary" | "info" ,
-    setSearchText?: Function,
     showSearch?: boolean
 }

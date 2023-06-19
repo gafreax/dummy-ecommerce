@@ -8,7 +8,6 @@ import ProductCard from "./ProductCard/index.tsx";
 import { ProductItem, ProductState } from "../../store/dummyjson/reducers/productReducer.types.js";
 
 const Products = ({ loading, items, skip }:  ProductState ) => {
-    console.log("Products", loading, items, skip);
     if(loading && !items) {
         return <Col xs={12} md={9}>
             <Row> <GhostCard /> <GhostCard /> <GhostCard /> <GhostCard /> </Row>
