@@ -15,8 +15,6 @@ const AddProduct = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("send");
-        console.dir(state);
         const { product } = state;
         const data = {
             brand: product?.brand?.value,
@@ -28,7 +26,6 @@ const AddProduct = () => {
             stock: product?.stock?.value,
             title: product?.title?.value
         }
-        console.log(data);
         fetch('https://dummyjson.com/products/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

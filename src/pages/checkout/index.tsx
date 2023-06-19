@@ -84,7 +84,7 @@ const Checkout = () => {
     }
 
     return <Container>
-        <Header link={"/"} linkTitle={"Home"} showSearch={false} />
+        <Header  />
         <Table striped bordered hover>
             <thead>
                 <tr>

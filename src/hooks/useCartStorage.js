@@ -11,7 +11,6 @@ const useCartStorage = (defaultValue = []) => {
     const [cartStorage, setCartStorage] = useState(intitalValue);
 
     useEffect(() => {
-        console.log("effect del nostro hook");
         localStorage.setItem(KEY, JSON.stringify(cartStorage));
     }, [cartStorage, setCartStorage]);
 
